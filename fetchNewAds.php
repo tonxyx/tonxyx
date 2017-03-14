@@ -3,9 +3,10 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+$timeFilePath = '/var/www/html/lastTime.txt';
 $url = 'http://www.njuskalo.hr/auti?modelId=11944&onlyFullPrice=1&price%5Bmin%5D=5500&price%5Bmax%5D=7000&yearManufactured%5Bmin%5D=2004&adsWithImages=1&fuelTypeId=602&mileage%5Bmax%5D=200000';
 
-$time = trim(file_get_contents('/var/www/html/lastTime.txt'));
+$time = trim(file_get_contents($timeFilePath));
 $date = \DateTime::createFromFormat('Y-m-d\TH:i:sT', $time); // create datetime object from last time
 
 $classname = 'EntityList-item EntityList-item--Regular'; // watch only regular items
@@ -23,7 +24,7 @@ foreach ($items as $item) {
   $newItemTime = \DateTime::createFromFormat('Y-m-d\TH:i:sT', $itemTime); // create item datetime
   if ($newItemTime > $date) { // compare and if newer save time of newest and send email for all
     if ($i == 0) {
-      file_put_contents('lastTime.txt', $itemTime);
+      file_put_contents($timeFilePath, $itemTime);
       $i++;
     }
 

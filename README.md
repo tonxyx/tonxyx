@@ -1,1 +1,1 @@
-# Send notifications for latest ads
+# Personal blog code
